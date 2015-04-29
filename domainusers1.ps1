@@ -39,7 +39,9 @@ Connect-MSolservice
 #this will will retrieve all the domains in the array. if you want to restrict to only 1 domain comment the below
 # 4 lines
 foreach ($element in $array) { 
-        $FileName2Export = "$env:USERPROFILE\Desktop\$element"+$myDate+".csv"
+        #strip off the .org in the filename
+        $newname2 = $element.substring(0,($element.length - 4))
+        $FileName2Export = "$env:USERPROFILE\Desktop\$newname2"+$myDate+".csv"
         Get-MsolUser -DomainName $element | Select-Object Country, DisplayName, FirstName, LastName, UserPrincipalName, Title, Department, State, Office, PhoneNumber, MobilePhone, LastPasswordChangeTimestamp  | Export-Csv $FileName2Export
 }
 #Or get All field for that users - uncomment the below line
